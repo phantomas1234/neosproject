@@ -1,0 +1,110 @@
+$TITLE AIRCRAFT ALLOCATION UNDER UNCERTAIN DEMAND  (AIRCRAF,SEQ=8)
+$Ontext
+
+  THE OBJECTIVE OF THIS MODEL IS TO ALLOCATE AIRCRAFTS TO ROUTES TO MAXIMIZE
+  THE EXPECTED PROFIT WHEN TRAFFIC DEMAND IS UNCERTAIN. TWO DIFFERENT
+  FORMULATIONS ARE USED, THE DELTA AND THE LAMBDA FORMUALTION.
+
+  REFERENCE: DANTZIG G B, LINEAR PROGRAMMING AND EXTENSIONS,
+             PRINCETON UNIVERSITY PRESS, PRINCETON, NEW JERSEY, 1963.
+             (CHAPTER 28)
+$Offtext
+
+ SET I     AIRCRAFT TYPES AND UNASSIGNED PASSENGERS / A, B, C, D /
+     J     ASSIGNED AND UNASSIGNED ROUTES           / ROUTE-1, ROUTE-2, ROUTE-3, ROUTE-4, ROUTE-5 /
+     H     DEMAND STATES                            /    1*5     /
+
+ ALIAS(H,HP);
+
+       TABLE  DD(J,H)     DEMAND DISTRIBUTION ON ROUTE J
+
+              1       2      3      4      5
+ ROUTE-1    200     220    250    270    300
+ ROUTE-2     50     150
+ ROUTE-3    140     160    180    200    220
+ ROUTE-4     10      50     80    100    340
+ ROUTE-5    580     600    620
+
+       TABLE  LAMBDA(J,H)  PROBABILITY OF DEMAND STATE H ON ROUTE J
+
+               1      2      3      4      5
+ ROUTE-1      .2     .05    .35    .2     .2
+ ROUTE-2      .3     .7
+ ROUTE-3      .1     .2     .4     .2     .1
+ ROUTE-4      .2     .2     .3     .2     .1
+ ROUTE-5      .1     .8     .1
+
+       TABLE  C(I,J)       COSTS PER AIRCRAFT (1000S)
+
+          ROUTE-1    ROUTE-2    ROUTE-3     ROUTE-4     ROUTE-5
+ A          18         21         18          16           10
+ B                     15         16          14            9
+ C                     10                      9            6
+ D          17         16         17          15           10
+
+       TABLE  P(I,J)    PASSENGER CAPACITY OF AIRCRAFT I ON ROUTE J
+
+         ROUTE-1     ROUTE-2     ROUTE-3     ROUTE-4     ROUTE-5
+ A          16         15          28          23          81
+ B                     10          14          15          57
+ C                      5                       7          29
+ D           9         11          22          17          55
+
+ PARAMETER AA(I)      AIRCRAFT AVAILIABILITY              / A   10, B   19, C   25, D   15 /
+           K(J)       REVENUE LOST (1000 PER 100  BUMPED) / (ROUTE-1,ROUTE-2) 13, (ROUTE-3,ROUTE-4) 7, ROUTE-5 1 /
+           ED(J)      EXPECTED DEMAND
+           GAMMA(J,H) PROBABILITY OF EXCEEDING DEMAND INCREMENT H ON ROUTE J
+           DELTB(J,H) INCREMENTAL PASSENGER LOAD IN DEMAND STATES;
+
+ ED(J)      = SUM(H, LAMBDA(J,H)*DD(J,H));
+ GAMMA(J,H) = SUM(HP$(ORD(HP) GE ORD(H)), LAMBDA(J,HP));
+ DELTB(J,H) = (DD(J,H)-DD(J,H-1))$DD(J,H);
+
+ DISPLAY ED, GAMMA, DELTB;
+
+ POSITIVE VARIABLES
+   X(I,J)  NUMBER OF AIRCRAFT TYPE I ASSIGNED TO ROUTE J
+   Y(J,H)  PASSENGERS ACTUALLY CARRIED
+   B(J,H)  PASSENGERS BUMPED
+   OC      OPERATING COST
+   BC      BUMPING COST
+ VARIABLE PHI     TOTAL EXPECTED COSTS
+
+ EQUATIONS
+   AB(I)   AIRCRAFT BALANCE
+   DB(J)   DEMAND BALANCE
+   YD(J,H) DEFINITION OF BOARDED PASSENGERS
+   BD(J,H) DEFINITION OF BUMPED PASSENGERS
+   OCD     OPERATING COST DEFINITION
+   BCD1    BUMPING COST DEFINITION: VERSION 1
+   BCD2    BUMPING COST DEFINITION: VERSION 2
+   OBJ     OBJECTIVE FUNCTION;
+
+ AB(I)..   SUM(J, X(I,J)) =L= AA(I);
+
+ DB(J)..   SUM(I, P(I,J)*X(I,J)) =G= SUM(H$DELTB(J,H), Y(J,H));
+
+ YD(J,H).. Y(J,H) =L= SUM(I, P(I,J)*X(I,J));
+
+ BD(J,H).. B(J,H) =E= DD(J,H) - Y(J,H);
+
+ OCD..     OC =E= SUM((I,J), C(I,J)*X(I,J));
+
+ BCD1..    BC =E= SUM(J, K(J)*(ED(J)-SUM(H, GAMMA(J,H)*Y(J,H))));
+
+ BCD2..    BC =E= SUM((J,H), K(J)*LAMBDA(J,H)*B(J,H));
+
+ OBJ..     PHI =E= OC + BC ;
+
+ MODEL  ALLOC1 AIRCRAFT ALLOCATION VERSION 1 / AB, DB, OCD, BCD1, OBJ /
+        ALLOC2 AIRCRAFT ALLOCATION VERSION 2 / AB, YD, BD, OCD, BCD2, OBJ / ;
+
+* VERSION 1 REQUIRES UPPER BOUNDS ON Y
+
+   Y.UP(J,H) = DELTB(J,H)
+
+ SOLVE ALLOC1 MINIMIZING PHI USING LP; DISPLAY Y.L;
+
+   Y.UP(J,H) = +INF;
+
+  SOLVE ALLOC2 MINIMIZING PHI USING LP; DISPLAY Y.L;

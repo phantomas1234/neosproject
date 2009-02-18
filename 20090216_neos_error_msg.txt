@@ -1,0 +1,535 @@
+
+GAMS Rev 228  x86/Linux                                02/16/09 19:01:18 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+   1   
+
+GAMS Rev 228  x86/Linux                                02/16/09 19:01:18 Page 2
+FBA implementation (Proof of Principle)
+C o m p i l a t i o n
+
+
+   3   
+   4  *
+   5  *
+   6  *
+   7   
+   8  Sets
+   9      i metabolite/row index /
+  10      M13dpgc
+  11  M2pgc
+  12  M3pgc
+  13  M6pgcc
+  14  M6pglc
+  15  Macb
+  16  Macc
+  17  Maccoac
+  18  Mace
+  19  Mactpc
+  20  Madpc
+  21  Makgb
+  22  Makgc
+  23  Makge
+  24  Mampc
+  25  Matpc
+  26  Mcitc
+  27  Mco2b
+  28  Mco2c
+  29  Mco2e
+  30  Mcoac
+  31  Mdhapc
+  32  Me4pc
+  33  Metohb
+  34  Metohc
+  35  Metohe
+  36  Mf6pc
+  37  Mfadc
+  38  Mfadh2c
+  39  Mfdpc
+  40  Mforb
+  41  Mforc
+  42  Mfore
+  43  Mfumb
+  44  Mfumc
+  45  Mfume
+  46  Mg3pc
+  47  Mg6pc
+  48  MglcDb
+  49  MglcDe
+  50  Mglxc
+  51  Mh2ob
+  52  Mh2oc
+  53  Mh2oe
+  54  Mhb
+  55  Mhc
+  56  Mhe
+  57  Micitc
+  58  MlacDb
+  59  MlacDc
+  60  MlacDe
+  61  MmalLc
+  62  Mnadc
+  63  Mnadhc
+  64  Mnadpc
+  65  Mnadphc
+  66  Mo2b
+  67  Mo2c
+  68  Mo2e
+  69  Moaac
+  70  Mpepc
+  71  Mpib
+  72  Mpic
+  73  Mpie
+  74  Mpyrb
+  75  Mpyrc
+  76  Mpyre
+  77  Mq8c
+  78  Mq8h2c
+  79  Mr5pc
+  80  Mru5pDc
+  81  Ms7pc
+  82  Msuccb
+  83  Msuccc
+  84  Msucce
+  85  Msuccoac
+  86  Mxu5pDc
+  87      /;
+****       $338,182
+  88      j reaction/column index /
+****      $140     $36
+  89      R_PGM
+  90  R_ENO
+  91  R_EX_ac_e_
+  92  R_EX_akg_e_
+  93  R_PGK
+  94  R_ACKr
+  95  R_ADK1
+  96  R_ACONT
+  97  R_EX_co2_e_
+  98  R_CO2t
+  99  R_TPI
+ 100  R_EX_etoh_e_
+ 101  R_FBA
+ 102  R_EX_for_e_
+ 103  R_FORt
+ 104  R_EX_fum_e_
+ 105  R_PGI
+ 106  R_EX_glc_e_
+ 107  R_FUM
+ 108  R_EX_h2o_e_
+ 109  R_H2Ot
+ 110  R_EX_h_e_
+ 111  R_ACt2r
+ 112  R_AKGt2r
+ 113  R_ETOHt2r
+ 114  R_EX_lac_D_e_
+ 115  R_D_LACt2
+ 116  R_LDH_D
+ 117  R_MDH
+ 118  R_ADHEr
+ 119  R_G6PDH2r
+ 120  R_ICDHyr
+ 121  R_EX_o2_e_
+ 122  R_O2t
+ 123  R_PIt
+ 124  R_PTAr
+ 125  R_ATPS4r
+ 126  R_GAPD
+ 127  R_EX_pi_e_
+ 128  R_EX_pyr_e_
+ 129  R_PYRt2r
+ 130  R_SUCD4
+ 131  R_RPI
+ 132  R_RPE
+ 133  R_TALA
+ 134  R_SUCOAS
+ 135  R_EX_succ_e_
+ 136  R_TKT2
+ 137  R_TKT1
+ 138  R_PFK
+ 139  R_FRD
+ 140  R_PGL
+ 141  R_ATPM
+ 142  R_FBP
+ 143  R_MALS
+ 144  R_FUMt2_2
+ 145  R_ICL
+ 146  R_AKGDH
+ 147  R_ME1
+ 148  R_GND
+ 149  R_ME2
+ 150  R_THD2
+ 151  R_NADTRHD
+ 152  R_PPCK
+ 153  R_CS
+ 154  R_GLCpts
+ 155  R_PPC
+ 156  R_PYK
+ 157  R_PFL
+ 158  R_PPS
+ 159  R_PDH
+ 160  R_NADH11
+ 161  R_CYTBD
+ 162  R_Biomass_Ecoli_core_N__w_GAM_
+ 163  R_SUCD1i
+ 164  R_SUCCt2b
+ 165  R_SUCCt2_2
+ 166      /;
+ 167   
+ 168  Parameters
+ 169      S(i,j) stoichiometric matrix /
+****          $148,316,121
+ 170      R_PGM . R_PGK       1.
+ 171  R_PGM . R_GAPD  1.
+ 172  R_ENO . R_PGM   -1.
+ 173  R_ENO . R_ENO   -1.
+ 174  R_EX_ac_e_ . R_PGM      1.
+ 175  R_EX_ac_e_ . R_PGK      -1.
+ 176  R_EX_ac_e_ . R_Biomass_Ecoli_core_N__w_GAM_     -1.496
+ 177  R_EX_akg_e_ . R_PGL     1.
+ 178  R_EX_akg_e_ . R_GND     -1.
+ 179  R_PGK . R_G6PDH2r       1.
+ 180  R_PGK . R_PGL   -1.
+ 181  R_ACKr . R_ACKr -1.
+ 182  R_ACKr . R_ACt2r        1.
+ 183  R_ADK1 . R_ADHEr        -1.
+ 184  R_ADK1 . R_PTAr -1.
+ 185  R_ADK1 . R_MALS -1.
+ 186  R_ADK1 . R_CS   -1.
+ 187  R_ADK1 . R_PFL  1.
+ 188  R_ADK1 . R_PDH  1.
+ 189  R_ADK1 . R_Biomass_Ecoli_core_N__w_GAM_ -3.7478
+ 190  R_ACONT . R_EX_ac_e_    -1.
+ 191  R_ACONT . R_ACt2r       -1.
+ 192  R_EX_co2_e_ . R_ACKr    1.
+ 193  R_EX_co2_e_ . R_PTAr    1.
+ 194  R_CO2t . R_PGK  1.
+ 195  R_CO2t . R_ACKr 1.
+ 196  R_CO2t . R_ADK1 2.
+ 197  R_CO2t . R_ATPS4r       -1.
+ 198  R_CO2t . R_SUCOAS       1.
+ 199  R_CO2t . R_PFK  1.
+ 200  R_CO2t . R_ATPM 1.
+ 201  R_CO2t . R_PPCK 1.
+ 202  R_CO2t . R_PYK  -1.
+ 203  R_CO2t . R_Biomass_Ecoli_core_N__w_GAM_ 55.703
+ 204  R_TPI . R_AKGt2r        1.
+ 205  R_TPI . R_ICDHyr        1.
+ 206  R_TPI . R_AKGDH -1.
+ 207  R_TPI . R_Biomass_Ecoli_core_N__w_GAM_  -1.0789
+ 208  R_EX_etoh_e_ . R_EX_akg_e_      -1.
+ 209  R_EX_etoh_e_ . R_AKGt2r -1.
+ 210  R_FBA . R_ADK1  -1.
+ 211  R_FBA . R_PPS   1.
+ 212  R_EX_for_e_ . R_PGK     -1.
+ 213  R_EX_for_e_ . R_ACKr    -1.
+ 214  R_EX_for_e_ . R_ADK1    -1.
+ 215  R_EX_for_e_ . R_ATPS4r  1.
+ 216  R_EX_for_e_ . R_SUCOAS  -1.
+ 217  R_EX_for_e_ . R_PFK     -1.
+ 218  R_EX_for_e_ . R_ATPM    -1.
+ 219  R_EX_for_e_ . R_PPCK    -1.
+ 220  R_EX_for_e_ . R_PYK     1.
+ 221  R_EX_for_e_ . R_PPS     -1.
+ 222  R_EX_for_e_ . R_Biomass_Ecoli_core_N__w_GAM_    -55.703
+ 223  R_FORt . R_ACONT        -1.
+ 224  R_FORt . R_CS   1.
+ 225  R_EX_fum_e_ . R_CO2t    1.
+ 226  R_EX_fum_e_ . R_ICDHyr  1.
+ 227  R_EX_fum_e_ . R_AKGDH   1.
+ 228  R_EX_fum_e_ . R_ME1     1.
+ 229  R_EX_fum_e_ . R_GND     1.
+ 230  R_EX_fum_e_ . R_ME2     1.
+ 231  R_EX_fum_e_ . R_PPCK    1.
+ 232  R_EX_fum_e_ . R_PPC     -1.
+ 233  R_EX_fum_e_ . R_PDH     1.
+ 234  R_PGI . R_EX_co2_e_     -1.
+ 235  R_PGI . R_CO2t  -1.
+ 236  R_EX_glc_e_ . R_ADHEr   1.
+ 237  R_EX_glc_e_ . R_PTAr    1.
+ 238  R_EX_glc_e_ . R_SUCOAS  -1.
+ 239  R_EX_glc_e_ . R_MALS    1.
+ 240  R_EX_glc_e_ . R_AKGDH   -1.
+ 241  R_EX_glc_e_ . R_CS      1.
+ 242  R_EX_glc_e_ . R_PFL     -1.
+ 243  R_EX_glc_e_ . R_PDH     -1.
+ 244  R_EX_glc_e_ . R_Biomass_Ecoli_core_N__w_GAM_    3.7478
+ 245  R_FUM . R_TPI   -1.
+ 246  R_FUM . R_FBA   1.
+ 247  R_EX_h2o_e_ . R_TALA    1.
+ 248  R_EX_h2o_e_ . R_TKT2    -1.
+ 249  R_EX_h2o_e_ . R_Biomass_Ecoli_core_N__w_GAM_    -0.361
+ 250  R_H2Ot . R_ETOHt2r      1.
+ 251  R_H2Ot . R_ADHEr        1.
+ 252  R_EX_h_e_ . R_EX_etoh_e_        -1.
+ 253  R_EX_h_e_ . R_ETOHt2r   -1.
+ 254  R_ACt2r . R_PGI 1.
+ 255  R_ACt2r . R_TALA        1.
+ 256  R_ACt2r . R_TKT2        1.
+ 257  R_ACt2r . R_PFK -1.
+ 258  R_ACt2r . R_FBP 1.
+ 259  R_ACt2r . R_Biomass_Ecoli_core_N__w_GAM_        -0.0709
+ 260  R_AKGt2r . R_SUCD4      1.
+ 261  R_AKGt2r . R_FRD        1.
+ 262  R_AKGt2r . R_SUCD1i     -1.
+ 263  R_ETOHt2r . R_SUCD4     -1.
+ 264  R_ETOHt2r . R_FRD       -1.
+ 265  R_ETOHt2r . R_SUCD1i    1.
+ 266  R_EX_lac_D_e_ . R_FBA   -1.
+ 267  R_EX_lac_D_e_ . R_PFK   1.
+ 268  R_EX_lac_D_e_ . R_FBP   -1.
+ 269  R_D_LACt2 . R_FORt      1.
+ 270  R_D_LACt2 . R_PFL       1.
+ 271  R_LDH_D . R_EX_for_e_   -1.
+ 272  R_LDH_D . R_FORt        -1.
+ 273  R_MDH . R_FUM   -1.
+ 274  R_MDH . R_FRD   -1.
+ 275  R_MDH . R_FUMt2_2       1.
+ 276  R_MDH . R_SUCD1i        1.
+ 277  R_ADHEr . R_EX_fum_e_   -1.
+ 278  R_ADHEr . R_FUMt2_2     -1.
+ 279  R_G6PDH2r . R_TPI       1.
+ 280  R_G6PDH2r . R_FBA       1.
+ 281  R_G6PDH2r . R_GAPD      -1.
+ 282  R_G6PDH2r . R_TALA      -1.
+ 283  R_G6PDH2r . R_TKT2      1.
+ 284  R_G6PDH2r . R_TKT1      1.
+ 285  R_G6PDH2r . R_Biomass_Ecoli_core_N__w_GAM_      -0.129
+ 286  R_ICDHyr . R_PGI        -1.
+ 287  R_ICDHyr . R_G6PDH2r    -1.
+ 288  R_ICDHyr . R_GLCpts     1.
+ 289  R_ICDHyr . R_Biomass_Ecoli_core_N__w_GAM_       -0.205
+ 290  R_EX_o2_e_ . R_EX_glc_e_        -1.
+ 291  R_EX_o2_e_ . R_GLCpts   -1.
+ 292  R_O2t . R_MALS  -1.
+ 293  R_O2t . R_ICL   1.
+ 294  R_PIt . R_ENO   1.
+ 295  R_PIt . R_FUM   -1.
+ 296  R_PIt . R_H2Ot  1.
+ 297  R_PIt . R_ATPS4r        1.
+ 298  R_PIt . R_PGL   -1.
+ 299  R_PIt . R_ATPM  -1.
+ 300  R_PIt . R_FBP   -1.
+ 301  R_PIt . R_MALS  -1.
+ 302  R_PIt . R_CS    -1.
+ 303  R_PIt . R_PPC   -1.
+ 304  R_PIt . R_PPS   -1.
+ 305  R_PIt . R_CYTBD 1.
+ 306  R_PIt . R_Biomass_Ecoli_core_N__w_GAM_  -55.703
+ 307  R_PTAr . R_EX_h2o_e_    -1.
+ 308  R_PTAr . R_H2Ot -1.
+ 309  R_ATPS4r . R_ACt2r      1.
+ 310  R_ATPS4r . R_AKGt2r     1.
+ 311  R_ATPS4r . R_ETOHt2r    1.
+ 312  R_ATPS4r . R_D_LACt2    1.
+ 313  R_ATPS4r . R_LDH_D      1.
+ 314  R_ATPS4r . R_MDH        1.
+ 315  R_ATPS4r . R_ADHEr      -2.
+ 316  R_ATPS4r . R_G6PDH2r    1.
+ 317  R_ATPS4r . R_ATPS4r     3.
+ 318  R_ATPS4r . R_GAPD       1.
+ 319  R_ATPS4r . R_PYRt2r     1.
+ 320  R_ATPS4r . R_PFK        1.
+ 321  R_ATPS4r . R_PGL        1.
+ 322  R_ATPS4r . R_ATPM       1.
+ 323  R_ATPS4r . R_MALS       1.
+ 324  R_ATPS4r . R_FUMt2_2    2.
+ 325  R_ATPS4r . R_THD2       2.
+ 326  R_ATPS4r . R_CS 1.
+ 327  R_ATPS4r . R_PPC        1.
+ 328  R_ATPS4r . R_PYK        -1.
+ 329  R_ATPS4r . R_PPS        2.
+ 330  R_ATPS4r . R_NADH11     -3.
+ 331  R_ATPS4r . R_CYTBD      -2.
+ 332  R_ATPS4r . R_Biomass_Ecoli_core_N__w_GAM_       41.025
+ 333  R_ATPS4r . R_SUCCt2b    -1.
+ 334  R_ATPS4r . R_SUCCt2_2   2.
+ 335  R_GAPD . R_EX_h_e_      -1.
+ 336  R_GAPD . R_ACt2r        -1.
+ 337  R_GAPD . R_AKGt2r       -1.
+ 338  R_GAPD . R_ETOHt2r      -1.
+ 339  R_GAPD . R_D_LACt2      -1.
+ 340  R_GAPD . R_ATPS4r       -4.
+ 341  R_GAPD . R_PYRt2r       -1.
+ 342  R_GAPD . R_FUMt2_2      -2.
+ 343  R_GAPD . R_THD2 -2.
+ 344  R_GAPD . R_NADH11       2.
+ 345  R_GAPD . R_CYTBD        2.
+ 346  R_GAPD . R_SUCCt2b      1.
+ 347  R_GAPD . R_SUCCt2_2     -2.
+ 348  R_EX_pi_e_ . R_ACONT    1.
+ 349  R_EX_pi_e_ . R_ICDHyr   -1.
+ 350  R_EX_pi_e_ . R_ICL      -1.
+ 351  R_EX_pyr_e_ . R_D_LACt2 1.
+ 352  R_EX_pyr_e_ . R_LDH_D   -1.
+ 353  R_PYRt2r . R_EX_lac_D_e_        -1.
+ 354  R_PYRt2r . R_D_LACt2    -1.
+ 355  R_SUCD4 . R_FUM 1.
+ 356  R_SUCD4 . R_MDH -1.
+ 357  R_SUCD4 . R_MALS        1.
+ 358  R_SUCD4 . R_ME1 -1.
+ 359  R_SUCD4 . R_ME2 -1.
+ 360  R_RPI . R_LDH_D -1.
+ 361  R_RPI . R_MDH   -1.
+ 362  R_RPI . R_ADHEr 2.
+ 363  R_RPI . R_GAPD  -1.
+ 364  R_RPI . R_AKGDH -1.
+ 365  R_RPI . R_ME1   -1.
+ 366  R_RPI . R_THD2  1.
+ 367  R_RPI . R_NADTRHD       -1.
+ 368  R_RPI . R_PDH   -1.
+ 369  R_RPI . R_NADH11        1.
+ 370  R_RPI . R_Biomass_Ecoli_core_N__w_GAM_  -3.547
+ 371  R_RPE . R_LDH_D 1.
+ 372  R_RPE . R_MDH   1.
+ 373  R_RPE . R_ADHEr -2.
+ 374  R_RPE . R_GAPD  1.
+ 375  R_RPE . R_AKGDH 1.
+ 376  R_RPE . R_ME1   1.
+ 377  R_RPE . R_THD2  -1.
+ 378  R_RPE . R_NADTRHD       1.
+ 379  R_RPE . R_PDH   1.
+ 380  R_RPE . R_NADH11        -1.
+ 381  R_RPE . R_Biomass_Ecoli_core_N__w_GAM_  3.547
+ 382  R_TALA . R_G6PDH2r      -1.
+ 383  R_TALA . R_ICDHyr       -1.
+ 384  R_TALA . R_GND  -1.
+ 385  R_TALA . R_ME2  -1.
+ 386  R_TALA . R_THD2 -1.
+ 387  R_TALA . R_NADTRHD      1.
+ 388  R_TALA . R_Biomass_Ecoli_core_N__w_GAM_ 18.225
+ 389  R_SUCOAS . R_G6PDH2r    1.
+ 390  R_SUCOAS . R_ICDHyr     1.
+ 391  R_SUCOAS . R_GND        1.
+ 392  R_SUCOAS . R_ME2        1.
+ 393  R_SUCOAS . R_THD2       1.
+ 394  R_SUCOAS . R_NADTRHD    -1.
+ 395  R_SUCOAS . R_Biomass_Ecoli_core_N__w_GAM_       -18.225
+ 396  R_EX_succ_e_ . R_O2t    1.
+ 397  R_EX_succ_e_ . R_CYTBD  -0.5
+ 398  R_TKT2 . R_EX_o2_e_     -1.
+ 399  R_TKT2 . R_O2t  -1.
+ 400  R_TKT1 . R_MDH  1.
+ 401  R_TKT1 . R_PPCK -1.
+ 402  R_TKT1 . R_CS   -1.
+ 403  R_TKT1 . R_PPC  1.
+ 404  R_TKT1 . R_Biomass_Ecoli_core_N__w_GAM_ -1.7867
+ 405  R_PFK . R_ENO   1.
+ 406  R_PFK . R_PPCK  1.
+ 407  R_PFK . R_GLCpts        -1.
+ 408  R_PFK . R_PPC   -1.
+ 409  R_PFK . R_PYK   -1.
+ 410  R_PFK . R_PPS   1.
+ 411  R_PFK . R_Biomass_Ecoli_core_N__w_GAM_  -0.5191
+ 412  R_FRD . R_PIt   -1.
+ 413  R_FRD . R_PTAr  -1.
+ 414  R_FRD . R_ATPS4r        -1.
+ 415  R_FRD . R_GAPD  -1.
+ 416  R_FRD . R_SUCOAS        1.
+ 417  R_FRD . R_ATPM  1.
+ 418  R_FRD . R_FBP   1.
+ 419  R_FRD . R_PPC   1.
+ 420  R_FRD . R_PPS   1.
+ 421  R_FRD . R_Biomass_Ecoli_core_N__w_GAM_  55.703
+ 422  R_PGL . R_PIt   1.
+ 423  R_PGL . R_EX_pi_e_      -1.
+ 424  R_ATPM . R_LDH_D        1.
+ 425  R_ATPM . R_PYRt2r       1.
+ 426  R_ATPM . R_ME1  1.
+ 427  R_ATPM . R_ME2  1.
+ 428  R_ATPM . R_GLCpts       1.
+ 429  R_ATPM . R_PYK  1.
+ 430  R_ATPM . R_PFL  -1.
+ 431  R_ATPM . R_PPS  -1.
+ 432  R_ATPM . R_PDH  -1.
+ 433  R_ATPM . R_Biomass_Ecoli_core_N__w_GAM_ -2.8328
+ 434  R_FBP . R_EX_pyr_e_     -1.
+ 435  R_FBP . R_PYRt2r        -1.
+ 436  R_MALS . R_SUCD4        -1.
+ 437  R_MALS . R_NADH11       -1.
+ 438  R_MALS . R_CYTBD        1.
+ 439  R_FUMt2_2 . R_SUCD4     1.
+ 440  R_FUMt2_2 . R_NADH11    1.
+ 441  R_FUMt2_2 . R_CYTBD     -1.
+ 442  R_ICL . R_RPI   -1.
+ 443  R_ICL . R_TKT1  -1.
+ 444  R_ICL . R_Biomass_Ecoli_core_N__w_GAM_  -0.8977
+ 445  R_AKGDH . R_RPI 1.
+ 446  R_AKGDH . R_RPE -1.
+ 447  R_AKGDH . R_GND 1.
+ 448  R_ME1 . R_TALA  -1.
+ 449  R_ME1 . R_TKT1  1.
+ 450  R_GND . R_SUCOAS        -1.
+ 451  R_GND . R_FRD   1.
+ 452  R_GND . R_ICL   1.
+ 453  R_GND . R_SUCD1i        -1.
+ 454  R_GND . R_SUCCt2b       -1.
+ 455  R_GND . R_SUCCt2_2      1.
+ 456  R_ME2 . R_EX_succ_e_    -1.
+ 457  R_ME2 . R_SUCCt2b       1.
+ 458  R_ME2 . R_SUCCt2_2      -1.
+ 459  R_THD2 . R_SUCOAS       1.
+ 460  R_THD2 . R_AKGDH        1.
+ 461  R_NADTRHD . R_RPE       1.
+ 462  R_NADTRHD . R_TKT2      -1.
+ 463  R_NADTRHD . R_TKT1      -1.
+ 464   
+ 465      /;
+ 466   
+ 467  Variables
+ 468      Z objective function value
+ 469      v(j) flux vector;
+****        $148,316,121
+
+GAMS Rev 228  x86/Linux                                02/16/09 19:01:18 Page 3
+FBA implementation (Proof of Principle)
+Error Messages
+
+
+ 36  '=' or '..' or ':=' or '$=' operator expected
+     rest of statement ignored
+121  Set expected
+140  Unknown symbol
+148  Dimension different - The symbol is referenced with more/less
+        indices as declared
+182  Closing '/' missing in a set, parameter or model statement
+316  Implied type inconsistent with previous use of symbol
+338  Unique element expected - symbol was not an element
+        and the following text will be skipped until a proper
+        symbol is found to recover. Remember that an UNQUOTED
+        element has to start with a letter or digit
+        followed by letters, digits, '+', '-' or '_'. The length
+        is limited to 31 characters. The following words are
+        reserved (starting symbols of a GAMS statement) and cannot
+        be used for UNQUOTED set elements:
+    
+           ABORT, ACRONYM(S), ALIAS, BINARY, DISPLAY, ELSE
+           EQUATION(S), EXECUTE, FILE(S), FOR, FREE, IF, INTEGER, LOOP
+           MODEL(S), NEGATIVE, OPTION(S), PARAMETER(S)
+           POSITIVE, PROCEDURE(S), PUT, PUTCLEAR, PUTCLOSE, PUTHD
+           PUTPAGE, PUTTL, SCALAR(S), SEMICONT, SET(S), SOS1, SOS2
+           TABLE, VARIABLE(S), WHILE
+    
+        QUOTED elements can contain any character. Single and
+        double quotes can be used (starting and ending quote have
+        to match).
+
+**** 10 ERROR(S)   0 WARNING(S)
+
+
+COMPILATION TIME     =        0.050 SECONDS      3 Mb  LNX228-228 Jul 26, 2008
+
+
+USER: MCS Department: NEOS Server                    G080625:1209AS-LNX
+      Argonne National Labs                                      DC7116
+      License for teaching and research at degree granting institutions
+
+
+**** FILE SUMMARY
+
+Input      /nfs/mcs-homes64/neosotc/.neos5/jobs/1803536/gams.mod
+Output     /nfs/mcs-homes64/neosotc/.neos5/jobs/1803536/solve.out
+
+**** USER ERROR(S) ENCOUNTERED

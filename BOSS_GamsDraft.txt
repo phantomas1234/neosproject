@@ -1,0 +1,68 @@
+$TITLE BOSS framwork template
+
+*
+*
+*
+
+Sets
+    i metabolite/row index /<rowIDs>/
+    j reaction/column index /<columnIDs>/;
+    
+Parameters
+    v_exp(j) experimental fluxes /
+    <v_exp>
+    /
+    
+    S(i,j) stoichiometric matrix /
+    
+    /
+    Scalar uptake fixed glc uptake value /10/;
+    Scalar norm normalization of obj reactions flux /1/;
+
+Variables
+    Z minimal sum-squared-error
+    obj_coeff stoichiometric coefficients of the objective reaction
+    v(j) framework-computed fluxes
+    g dual variable associated with the uptake constraint
+    u(i) dual variables;
+
+* Line 3
+positive variable v;
+* Line 5
+v(GLC) = uptake;
+* Line 6
+v(<bossObj>) = norm
+
+Equations
+    obj sum-squared error between experimentally-measured and framework-computed fluxes
+    st_constr stoichiometric constraints
+    dualprim dual primal equality of inner optimization problem
+    
+    
+* Line 1
+obj.. Z =e= sum(j, sqr(v(j) - v_exp(j)))
+
+* Line 2
+dualprim.. v(<bossObj>) = uptake * g /
+
+* Line 4
+st_constr(i).. sum(j, S(i,j)*v(j)) =e= 0
+
+* Line 7
+coeffeq.. sum(i, u(i)*S(i,<bossObj>)) =g= 1
+
+* Line 8
+dualeq(j).. sum(i, u(i)*S(i,j)) =g= 0
+
+* Line 9
+glcuptake.. sum(i, u(i)*)
+
+
+
+Model boss /all/;
+
+Solve boss using nlp minimizing Z;
+
+
+outer
+
