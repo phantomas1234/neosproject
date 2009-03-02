@@ -168,12 +168,11 @@ path1 = "ProofOfPrinciple_GAMS_FBA.txt"
 path2 = "/Users/niko/programmingTmp/largePythonDict.txt"
 path3 = "/Users/niko/arbeit/Data/SBMLmodels/EcoliCore/EcoliCore_Gams_Parameters.txt"
 
-
 if __name__ == "__main__":
     # testNeos()
     tmp = testGAMSmodel(path1, path3)
     print tmp
-    open('expandedFBAmodel.txt', 'w').write(tmp.modModel)
+    open('expandedFBAmodel.gms', 'w').write(tmp.modModel)
     # neos = Neos(tmp.modModel, modelName="stub", category="lp", solver="BDMLP", 
     # inputMethod="GAMS", comments="None")
     # results = neos.solve(999)
