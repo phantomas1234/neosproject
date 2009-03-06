@@ -139,10 +139,6 @@ class GAMSmodel(object):
         """docstring for __str__"""
         return self.modModel
     
-    def submit2neos(self, neos_host="neos.mcs.anl.gov", neos_port=3332):
-        """Submits the model to neos"""
-        neos=xmlrpclib.Server("http://%s:%d" % (neos_host, neos_port))
-
 def testNeos():
     """docstring for testNeos"""
     stubModel = open('aircraft.lp', 'r').read()
@@ -172,7 +168,7 @@ if __name__ == "__main__":
     # testNeos()
     tmp = testGAMSmodel(path1, path3)
     print tmp
-    open('expandedFBAmodel.gms', 'w').write(tmp.modModel)
+    open('expandedFBAmodel.gms', 'w').write(tmp.modModel.replace("_", "-"))
     # neos = Neos(tmp.modModel, modelName="stub", category="lp", solver="BDMLP", 
     # inputMethod="GAMS", comments="None")
     # results = neos.solve(999)

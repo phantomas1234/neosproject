@@ -5,21 +5,24 @@ $TITLE FBA implementation (Proof of Principle)
 *
 
 Sets
-    i metabolite/row index /
+    i row index /
     %(rowIDs)s
-    /;
-    j reaction/column index /
+    /
+    j column index /
     %(columnIDs)s
-    /;
+    /
+;
 
 Parameters
     S(i,j) stoichiometric matrix /
     %(S)s
-    /;
+    /
+;
 
 Variables
     Z objective function value
-    v(j) flux vector;
+    v(j) flux vector
+;
 
 positive variable v;
 
