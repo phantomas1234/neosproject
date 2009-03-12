@@ -1,4 +1,4 @@
-GAMS Rev 230  DII-DII 23.0.2 Mac Intel32/Darwin                                                    03/02/09 13:27:38 Page 1
+GAMS Rev 230  DII-DII 23.0.2 Mac Intel32/Darwin                                                    03/11/09 21:56:37 Page 1
 FBA implementation (Proof of Principle)
 C o m p i l a t i o n
 
@@ -9,7 +9,7 @@ C o m p i l a t i o n
    5  *
    6   
    7  Sets
-   8      i row index /
+   8      i /
    9      M13dpgc
   10  M2pgc
   11  M3pgc
@@ -76,7 +76,7 @@ C o m p i l a t i o n
   72  Mpie
   73  Mpyrb
   74  Mpyrc
-GAMS Rev 230  DII-DII 23.0.2 Mac Intel32/Darwin                                                    03/02/09 13:27:38 Page 2
+GAMS Rev 230  DII-DII 23.0.2 Mac Intel32/Darwin                                                    03/11/09 21:56:37 Page 2
 FBA implementation (Proof of Principle)
 C o m p i l a t i o n
 
@@ -92,725 +92,725 @@ C o m p i l a t i o n
   83  Msucce
   84  Msuccoac
   85  Mxu5pDc
-  86      /
-  87      j column index /
-  88      R-PGM
-  89  R-ENO
-  90  R-EX-ac-e-
-  91  R-EX-akg-e-
-  92  R-PGK
-  93  R-ACKr
-  94  R-ADK1
-  95  R-ACONT
-  96  R-EX-co2-e
-  97  R-CO2t
-  98  R-TPI
-  99  R-EX-etoh-e-
- 100  R-FBA
- 101  R-EX-for-e-
- 102  R-FORt
- 103  R-EX-fum-e-
- 104  R-PGI
- 105  R-EX-glc-e-
- 106  R-FUM
- 107  R-EX-h2o-e-
- 108  R-H2Ot
- 109  R-EX-h-e-
- 110  R-ACt2r
- 111  R-AKGt2r
- 112  R-ETOHt2r
- 113  R-EX-lac-D-e-
- 114  R-D-LACt2
- 115  R-LDH-D
- 116  R-MDH
- 117  R-ADHEr
- 118  R-G6PDH2r
- 119  R-ICDHyr
- 120  R-EX-o2-e-
- 121  R-O2t
- 122  R-PIt
- 123  R-PTAr
- 124  R-ATPS4r
- 125  R-GAPD
- 126  R-EX-pi-e-
- 127  R-EX-pyr-e-
- 128  R-PYRt2r
- 129  R-SUCD4
- 130  R-RPI
- 131  R-RPE
- 132  R-TALA
- 133  R-SUCOAS
- 134  R-EX-succ-e-
- 135  R-TKT2
- 136  R-TKT1
- 137  R-PFK
- 138  R-FRD
- 139  R-PGL
- 140  R-ATPM
- 141  R-FBP
- 142  R-MALS
- 143  R-FUMt2-2
- 144  R-ICL
- 145  R-AKGDH
- 146  R-ME1
- 147  R-GND
-GAMS Rev 230  DII-DII 23.0.2 Mac Intel32/Darwin                                                    03/02/09 13:27:38 Page 3
+  86  /
+  87   
+  88      j /
+  89      R-PGM
+  90  R-ENO
+  91  R-EX-ac-e-
+  92  R-EX-akg-e-
+  93  R-PGK
+  94  R-ACKr
+  95  R-ADK1
+  96  R-ACONT
+  97  R-EX-co2-e-
+  98  R-CO2t
+  99  R-TPI
+ 100  R-EX-etoh-e-
+ 101  R-FBA
+ 102  R-EX-for-e-
+ 103  R-FORt
+ 104  R-EX-fum-e-
+ 105  R-PGI
+ 106  R-EX-glc-e-
+ 107  R-FUM
+ 108  R-EX-h2o-e-
+ 109  R-H2Ot
+ 110  R-EX-h-e-
+ 111  R-ACt2r
+ 112  R-AKGt2r
+ 113  R-ETOHt2r
+ 114  R-EX-lac-D-e-
+ 115  R-D-LACt2
+ 116  R-LDH-D
+ 117  R-MDH
+ 118  R-ADHEr
+ 119  R-G6PDH2r
+ 120  R-ICDHyr
+ 121  R-EX-o2-e-
+ 122  R-O2t
+ 123  R-PIt
+ 124  R-PTAr
+ 125  R-ATPS4r
+ 126  R-GAPD
+ 127  R-EX-pi-e-
+ 128  R-EX-pyr-e-
+ 129  R-PYRt2r
+ 130  R-SUCD4
+ 131  R-RPI
+ 132  R-RPE
+ 133  R-TALA
+ 134  R-SUCOAS
+ 135  R-EX-succ-e-
+ 136  R-TKT2
+ 137  R-TKT1
+ 138  R-PFK
+ 139  R-FRD
+ 140  R-PGL
+ 141  R-ATPM
+ 142  R-FBP
+ 143  R-MALS
+ 144  R-FUMt2-2
+ 145  R-ICL
+ 146  R-AKGDH
+ 147  R-ME1
+GAMS Rev 230  DII-DII 23.0.2 Mac Intel32/Darwin                                                    03/11/09 21:56:37 Page 3
 FBA implementation (Proof of Principle)
 C o m p i l a t i o n
 
 
- 148  R-ME2
- 149  R-THD2
- 150  R-NADTRHD
- 151  R-PPCK
- 152  R-CS
- 153  R-GLCpts
- 154  R-PPC
- 155  R-PYK
- 156  R-PFL
- 157  R-PPS
- 158  R-PDH
- 159  R-NADH11
- 160  R-CYTBD
- 161  R-Biomass-Ecoli-core-N--w-GAM-
- 162  R-SUCD1i
- 163  R-SUCCt2b
- 164  R-SUCCt2-2
- 165      /
- 166  ;
- 167   
- 168  Parameters
- 169      S(i,j) stoichiometric matrix /
- 170      R-PGM . R-PGK       1.
+ 148  R-GND
+ 149  R-ME2
+ 150  R-THD2
+ 151  R-NADTRHD
+ 152  R-PPCK
+ 153  R-CS
+ 154  R-GLCpts
+ 155  R-PPC
+ 156  R-PYK
+ 157  R-PFL
+ 158  R-PPS
+ 159  R-PDH
+ 160  R-NADH11
+ 161  R-CYTBD
+ 162  R-Biomass-Ecoli-core-N--w-GAM-
+ 163  R-SUCD1i
+ 164  R-SUCCt2b
+ 165  R-SUCCt2-2
+ 166      /
+ 167  ;
+ 168   
+ 169  Parameters
+ 170      S(i,j) stoichiometric matrix /
+ 171      R-PGM . R-PGK = 1.
 ****          $170
- 171  R-PGM . R-GAPD  1.
+ 172  R-PGM . R-GAPD  1.
 ****      $170
- 172  R-ENO . R-PGM   -1.
+ 173  R-ENO . R-PGM   -1.
 ****      $170
- 173  R-ENO . R-ENO   -1.
+ 174  R-ENO . R-ENO   -1.
 ****      $170
- 174  R-EX-ac-e- . R-PGM      1.
+ 175  R-EX-ac-e- . R-PGM      1.
 ****           $170
- 175  R-EX-ac-e- . R-PGK      -1.
+ 176  R-EX-ac-e- . R-PGK      -1.
 ****           $170
- 176  R-EX-ac-e- . R-Biomass-Ecoli-core-N--w-GAM-     -1.496
+ 177  R-EX-ac-e- . R-Biomass-Ecoli-core-N--w-GAM-     -1.496
 ****           $170
- 177  R-EX-akg-e- . R-PGL     1.
+ 178  R-EX-akg-e- . R-PGL     1.
 ****            $170
- 178  R-EX-akg-e- . R-GND     -1.
+ 179  R-EX-akg-e- . R-GND     -1.
 ****            $170
- 179  R-PGK . R-G6PDH2r       1.
+ 180  R-PGK . R-G6PDH2r       1.
 ****      $170
- 180  R-PGK . R-PGL   -1.
+ 181  R-PGK . R-PGL   -1.
 ****      $170
- 181  R-ACKr . R-ACKr -1.
+ 182  R-ACKr . R-ACKr -1.
 ****       $170
- 182  R-ACKr . R-ACt2r        1.
+ 183  R-ACKr . R-ACt2r        1.
 ****       $170
- 183  R-ADK1 . R-ADHEr        -1.
+ 184  R-ADK1 . R-ADHEr        -1.
 ****       $170
- 184  R-ADK1 . R-PTAr -1.
+ 185  R-ADK1 . R-PTAr -1.
 ****       $170
- 185  R-ADK1 . R-MALS -1.
+ 186  R-ADK1 . R-MALS -1.
 ****       $170
- 186  R-ADK1 . R-CS   -1.
+ 187  R-ADK1 . R-CS   -1.
 ****       $170
- 187  R-ADK1 . R-PFL  1.
+ 188  R-ADK1 . R-PFL  1.
 ****       $170
- 188  R-ADK1 . R-PDH  1.
+ 189  R-ADK1 . R-PDH  1.
 ****       $170
- 189  R-ADK1 . R-Biomass-Ecoli-core-N--w-GAM- -3.7478
+ 190  R-ADK1 . R-Biomass-Ecoli-core-N--w-GAM- -3.7478
 ****       $170
- 190  R-ACONT . R-EX-ac-e-    -1.
+ 191  R-ACONT . R-EX-ac-e-    -1.
 ****        $170
- 191  R-ACONT . R-ACt2r       -1.
+ 192  R-ACONT . R-ACt2r       -1.
 ****        $170
- 192  R-EX-co2-e- . R-ACKr    1.
+ 193  R-EX-co2-e- . R-ACKr    1.
 ****            $170
- 193  R-EX-co2-e- . R-PTAr    1.
+ 194  R-EX-co2-e- . R-PTAr    1.
 ****            $170
- 194  R-CO2t . R-PGK  1.
+ 195  R-CO2t . R-PGK  1.
 ****       $170
-GAMS Rev 230  DII-DII 23.0.2 Mac Intel32/Darwin                                                    03/02/09 13:27:38 Page 4
+GAMS Rev 230  DII-DII 23.0.2 Mac Intel32/Darwin                                                    03/11/09 21:56:37 Page 4
 FBA implementation (Proof of Principle)
 C o m p i l a t i o n
 
 
- 195  R-CO2t . R-ACKr 1.
+ 196  R-CO2t . R-ACKr 1.
 ****       $170
- 196  R-CO2t . R-ADK1 2.
+ 197  R-CO2t . R-ADK1 2.
 ****       $170
- 197  R-CO2t . R-ATPS4r       -1.
+ 198  R-CO2t . R-ATPS4r       -1.
 ****       $170
- 198  R-CO2t . R-SUCOAS       1.
+ 199  R-CO2t . R-SUCOAS       1.
 ****       $170
- 199  R-CO2t . R-PFK  1.
+ 200  R-CO2t . R-PFK  1.
 ****       $170
- 200  R-CO2t . R-ATPM 1.
+ 201  R-CO2t . R-ATPM 1.
 ****       $170
- 201  R-CO2t . R-PPCK 1.
+ 202  R-CO2t . R-PPCK 1.
 ****       $170
- 202  R-CO2t . R-PYK  -1.
+ 203  R-CO2t . R-PYK  -1.
 ****       $170
- 203  R-CO2t . R-Biomass-Ecoli-core-N--w-GAM- 55.703
+ 204  R-CO2t . R-Biomass-Ecoli-core-N--w-GAM- 55.703
 ****       $170
- 204  R-TPI . R-AKGt2r        1.
+ 205  R-TPI . R-AKGt2r        1.
 ****      $170
- 205  R-TPI . R-ICDHyr        1.
+ 206  R-TPI . R-ICDHyr        1.
 ****      $170
- 206  R-TPI . R-AKGDH -1.
+ 207  R-TPI . R-AKGDH -1.
 ****      $170
- 207  R-TPI . R-Biomass-Ecoli-core-N--w-GAM-  -1.0789
+ 208  R-TPI . R-Biomass-Ecoli-core-N--w-GAM-  -1.0789
 ****      $170
- 208  R-EX-etoh-e- . R-EX-akg-e-      -1.
+ 209  R-EX-etoh-e- . R-EX-akg-e-      -1.
 ****             $170
- 209  R-EX-etoh-e- . R-AKGt2r -1.
+ 210  R-EX-etoh-e- . R-AKGt2r -1.
 ****             $170
- 210  R-FBA . R-ADK1  -1.
+ 211  R-FBA . R-ADK1  -1.
 ****      $170
- 211  R-FBA . R-PPS   1.
+ 212  R-FBA . R-PPS   1.
 ****      $170
- 212  R-EX-for-e- . R-PGK     -1.
+ 213  R-EX-for-e- . R-PGK     -1.
 ****            $170
- 213  R-EX-for-e- . R-ACKr    -1.
+ 214  R-EX-for-e- . R-ACKr    -1.
 ****            $170
- 214  R-EX-for-e- . R-ADK1    -1.
+ 215  R-EX-for-e- . R-ADK1    -1.
 ****            $170
- 215  R-EX-for-e- . R-ATPS4r  1.
+ 216  R-EX-for-e- . R-ATPS4r  1.
 ****            $170
- 216  R-EX-for-e- . R-SUCOAS  -1.
+ 217  R-EX-for-e- . R-SUCOAS  -1.
 ****            $170
- 217  R-EX-for-e- . R-PFK     -1.
+ 218  R-EX-for-e- . R-PFK     -1.
 ****            $170
- 218  R-EX-for-e- . R-ATPM    -1.
+ 219  R-EX-for-e- . R-ATPM    -1.
 ****            $170
- 219  R-EX-for-e- . R-PPCK    -1.
+ 220  R-EX-for-e- . R-PPCK    -1.
 ****            $170
- 220  R-EX-for-e- . R-PYK     1.
+ 221  R-EX-for-e- . R-PYK     1.
 ****            $170
- 221  R-EX-for-e- . R-PPS     -1.
+ 222  R-EX-for-e- . R-PPS     -1.
 ****            $170
- 222  R-EX-for-e- . R-Biomass-Ecoli-core-N--w-GAM-    -55.703
+ 223  R-EX-for-e- . R-Biomass-Ecoli-core-N--w-GAM-    -55.703
 ****            $170
- 223  R-FORt . R-ACONT        -1.
+ 224  R-FORt . R-ACONT        -1.
 ****       $170
- 224  R-FORt . R-CS   1.
+ 225  R-FORt . R-CS   1.
 ****       $170
- 225  R-EX-fum-e- . R-CO2t    1.
+ 226  R-EX-fum-e- . R-CO2t    1.
 ****            $170
- 226  R-EX-fum-e- . R-ICDHyr  1.
+ 227  R-EX-fum-e- . R-ICDHyr  1.
 ****            $170
- 227  R-EX-fum-e- . R-AKGDH   1.
+ 228  R-EX-fum-e- . R-AKGDH   1.
 ****            $170
- 228  R-EX-fum-e- . R-ME1     1.
+ 229  R-EX-fum-e- . R-ME1     1.
 ****            $170
- 229  R-EX-fum-e- . R-GND     1.
+ 230  R-EX-fum-e- . R-GND     1.
 ****            $170
- 230  R-EX-fum-e- . R-ME2     1.
+ 231  R-EX-fum-e- . R-ME2     1.
 ****            $170
-GAMS Rev 230  DII-DII 23.0.2 Mac Intel32/Darwin                                                    03/02/09 13:27:38 Page 5
+GAMS Rev 230  DII-DII 23.0.2 Mac Intel32/Darwin                                                    03/11/09 21:56:37 Page 5
 FBA implementation (Proof of Principle)
 C o m p i l a t i o n
 
 
- 231  R-EX-fum-e- . R-PPCK    1.
+ 232  R-EX-fum-e- . R-PPCK    1.
 ****            $170
- 232  R-EX-fum-e- . R-PPC     -1.
+ 233  R-EX-fum-e- . R-PPC     -1.
 ****            $170
- 233  R-EX-fum-e- . R-PDH     1.
+ 234  R-EX-fum-e- . R-PDH     1.
 ****            $170
- 234  R-PGI . R-EX-co2-e-     -1.
-****      $170          $170
- 235  R-PGI . R-CO2t  -1.
+ 235  R-PGI . R-EX-co2-e-     -1.
 ****      $170
- 236  R-EX-glc-e- . R-ADHEr   1.
-****            $170
- 237  R-EX-glc-e- . R-PTAr    1.
-****            $170
- 238  R-EX-glc-e- . R-SUCOAS  -1.
-****            $170
- 239  R-EX-glc-e- . R-MALS    1.
-****            $170
- 240  R-EX-glc-e- . R-AKGDH   -1.
-****            $170
- 241  R-EX-glc-e- . R-CS      1.
-****            $170
- 242  R-EX-glc-e- . R-PFL     -1.
-****            $170
- 243  R-EX-glc-e- . R-PDH     -1.
-****            $170
- 244  R-EX-glc-e- . R-Biomass-Ecoli-core-N--w-GAM-    3.7478
-****            $170
- 245  R-FUM . R-TPI   -1.
+ 236  R-PGI . R-CO2t  -1.
 ****      $170
- 246  R-FUM . R-FBA   1.
+ 237  R-EX-glc-e- . R-ADHEr   1.
+****            $170
+ 238  R-EX-glc-e- . R-PTAr    1.
+****            $170
+ 239  R-EX-glc-e- . R-SUCOAS  -1.
+****            $170
+ 240  R-EX-glc-e- . R-MALS    1.
+****            $170
+ 241  R-EX-glc-e- . R-AKGDH   -1.
+****            $170
+ 242  R-EX-glc-e- . R-CS      1.
+****            $170
+ 243  R-EX-glc-e- . R-PFL     -1.
+****            $170
+ 244  R-EX-glc-e- . R-PDH     -1.
+****            $170
+ 245  R-EX-glc-e- . R-Biomass-Ecoli-core-N--w-GAM-    3.7478
+****            $170
+ 246  R-FUM . R-TPI   -1.
 ****      $170
- 247  R-EX-h2o-e- . R-TALA    1.
+ 247  R-FUM . R-FBA   1.
+****      $170
+ 248  R-EX-h2o-e- . R-TALA    1.
 ****            $170
- 248  R-EX-h2o-e- . R-TKT2    -1.
+ 249  R-EX-h2o-e- . R-TKT2    -1.
 ****            $170
- 249  R-EX-h2o-e- . R-Biomass-Ecoli-core-N--w-GAM-    -0.361
+ 250  R-EX-h2o-e- . R-Biomass-Ecoli-core-N--w-GAM-    -0.361
 ****            $170
- 250  R-H2Ot . R-ETOHt2r      1.
+ 251  R-H2Ot . R-ETOHt2r      1.
 ****       $170
- 251  R-H2Ot . R-ADHEr        1.
+ 252  R-H2Ot . R-ADHEr        1.
 ****       $170
- 252  R-EX-h-e- . R-EX-etoh-e-        -1.
+ 253  R-EX-h-e- . R-EX-etoh-e-        -1.
 ****          $170
- 253  R-EX-h-e- . R-ETOHt2r   -1.
+ 254  R-EX-h-e- . R-ETOHt2r   -1.
 ****          $170
- 254  R-ACt2r . R-PGI 1.
+ 255  R-ACt2r . R-PGI 1.
 ****        $170
- 255  R-ACt2r . R-TALA        1.
+ 256  R-ACt2r . R-TALA        1.
 ****        $170
- 256  R-ACt2r . R-TKT2        1.
+ 257  R-ACt2r . R-TKT2        1.
 ****        $170
- 257  R-ACt2r . R-PFK -1.
+ 258  R-ACt2r . R-PFK -1.
 ****        $170
- 258  R-ACt2r . R-FBP 1.
+ 259  R-ACt2r . R-FBP 1.
 ****        $170
- 259  R-ACt2r . R-Biomass-Ecoli-core-N--w-GAM-        -0.0709
+ 260  R-ACt2r . R-Biomass-Ecoli-core-N--w-GAM-        -0.0709
 ****        $170
- 260  R-AKGt2r . R-SUCD4      1.
+ 261  R-AKGt2r . R-SUCD4      1.
 ****         $170
- 261  R-AKGt2r . R-FRD        1.
+ 262  R-AKGt2r . R-FRD        1.
 ****         $170
- 262  R-AKGt2r . R-SUCD1i     -1.
+ 263  R-AKGt2r . R-SUCD1i     -1.
 ****         $170
- 263  R-ETOHt2r . R-SUCD4     -1.
+ 264  R-ETOHt2r . R-SUCD4     -1.
 ****          $170
- 264  R-ETOHt2r . R-FRD       -1.
+ 265  R-ETOHt2r . R-FRD       -1.
 ****          $170
- 265  R-ETOHt2r . R-SUCD1i    1.
+ 266  R-ETOHt2r . R-SUCD1i    1.
 ****          $170
- 266  R-EX-lac-D-e- . R-FBA   -1.
+ 267  R-EX-lac-D-e- . R-FBA   -1.
 ****              $170
-GAMS Rev 230  DII-DII 23.0.2 Mac Intel32/Darwin                                                    03/02/09 13:27:38 Page 6
+GAMS Rev 230  DII-DII 23.0.2 Mac Intel32/Darwin                                                    03/11/09 21:56:37 Page 6
 FBA implementation (Proof of Principle)
 C o m p i l a t i o n
 
 
- 267  R-EX-lac-D-e- . R-PFK   1.
+ 268  R-EX-lac-D-e- . R-PFK   1.
 ****              $170
- 268  R-EX-lac-D-e- . R-FBP   -1.
+ 269  R-EX-lac-D-e- . R-FBP   -1.
 ****              $170
- 269  R-D-LACt2 . R-FORt      1.
+ 270  R-D-LACt2 . R-FORt      1.
 ****          $170
- 270  R-D-LACt2 . R-PFL       1.
+ 271  R-D-LACt2 . R-PFL       1.
 ****          $170
- 271  R-LDH-D . R-EX-for-e-   -1.
+ 272  R-LDH-D . R-EX-for-e-   -1.
 ****        $170
- 272  R-LDH-D . R-FORt        -1.
+ 273  R-LDH-D . R-FORt        -1.
 ****        $170
- 273  R-MDH . R-FUM   -1.
+ 274  R-MDH . R-FUM   -1.
 ****      $170
- 274  R-MDH . R-FRD   -1.
+ 275  R-MDH . R-FRD   -1.
 ****      $170
- 275  R-MDH . R-FUMt2-2       1.
+ 276  R-MDH . R-FUMt2-2       1.
 ****      $170
- 276  R-MDH . R-SUCD1i        1.
+ 277  R-MDH . R-SUCD1i        1.
 ****      $170
- 277  R-ADHEr . R-EX-fum-e-   -1.
+ 278  R-ADHEr . R-EX-fum-e-   -1.
 ****        $170
- 278  R-ADHEr . R-FUMt2-2     -1.
+ 279  R-ADHEr . R-FUMt2-2     -1.
 ****        $170
- 279  R-G6PDH2r . R-TPI       1.
+ 280  R-G6PDH2r . R-TPI       1.
 ****          $170
- 280  R-G6PDH2r . R-FBA       1.
+ 281  R-G6PDH2r . R-FBA       1.
 ****          $170
- 281  R-G6PDH2r . R-GAPD      -1.
+ 282  R-G6PDH2r . R-GAPD      -1.
 ****          $170
- 282  R-G6PDH2r . R-TALA      -1.
+ 283  R-G6PDH2r . R-TALA      -1.
 ****          $170
- 283  R-G6PDH2r . R-TKT2      1.
+ 284  R-G6PDH2r . R-TKT2      1.
 ****          $170
- 284  R-G6PDH2r . R-TKT1      1.
+ 285  R-G6PDH2r . R-TKT1      1.
 ****          $170
- 285  R-G6PDH2r . R-Biomass-Ecoli-core-N--w-GAM-      -0.129
+ 286  R-G6PDH2r . R-Biomass-Ecoli-core-N--w-GAM-      -0.129
 ****          $170
- 286  R-ICDHyr . R-PGI        -1.
+ 287  R-ICDHyr . R-PGI        -1.
 ****         $170
- 287  R-ICDHyr . R-G6PDH2r    -1.
+ 288  R-ICDHyr . R-G6PDH2r    -1.
 ****         $170
- 288  R-ICDHyr . R-GLCpts     1.
+ 289  R-ICDHyr . R-GLCpts     1.
 ****         $170
- 289  R-ICDHyr . R-Biomass-Ecoli-core-N--w-GAM-       -0.205
+ 290  R-ICDHyr . R-Biomass-Ecoli-core-N--w-GAM-       -0.205
 ****         $170
- 290  R-EX-o2-e- . R-EX-glc-e-        -1.
+ 291  R-EX-o2-e- . R-EX-glc-e-        -1.
 ****           $170
- 291  R-EX-o2-e- . R-GLCpts   -1.
+ 292  R-EX-o2-e- . R-GLCpts   -1.
 ****           $170
- 292  R-O2t . R-MALS  -1.
+ 293  R-O2t . R-MALS  -1.
 ****      $170
- 293  R-O2t . R-ICL   1.
+ 294  R-O2t . R-ICL   1.
 ****      $170
- 294  R-PIt . R-ENO   1.
+ 295  R-PIt . R-ENO   1.
 ****      $170
- 295  R-PIt . R-FUM   -1.
+ 296  R-PIt . R-FUM   -1.
 ****      $170
- 296  R-PIt . R-H2Ot  1.
+ 297  R-PIt . R-H2Ot  1.
 ****      $170
- 297  R-PIt . R-ATPS4r        1.
+ 298  R-PIt . R-ATPS4r        1.
 ****      $170
- 298  R-PIt . R-PGL   -1.
+ 299  R-PIt . R-PGL   -1.
 ****      $170
- 299  R-PIt . R-ATPM  -1.
+ 300  R-PIt . R-ATPM  -1.
 ****      $170
- 300  R-PIt . R-FBP   -1.
+ 301  R-PIt . R-FBP   -1.
 ****      $170
- 301  R-PIt . R-MALS  -1.
+ 302  R-PIt . R-MALS  -1.
 ****      $170
- 302  R-PIt . R-CS    -1.
+ 303  R-PIt . R-CS    -1.
 ****      $170
-GAMS Rev 230  DII-DII 23.0.2 Mac Intel32/Darwin                                                    03/02/09 13:27:38 Page 7
+GAMS Rev 230  DII-DII 23.0.2 Mac Intel32/Darwin                                                    03/11/09 21:56:37 Page 7
 FBA implementation (Proof of Principle)
 C o m p i l a t i o n
 
 
- 303  R-PIt . R-PPC   -1.
+ 304  R-PIt . R-PPC   -1.
 ****      $170
- 304  R-PIt . R-PPS   -1.
+ 305  R-PIt . R-PPS   -1.
 ****      $170
- 305  R-PIt . R-CYTBD 1.
+ 306  R-PIt . R-CYTBD 1.
 ****      $170
- 306  R-PIt . R-Biomass-Ecoli-core-N--w-GAM-  -55.703
+ 307  R-PIt . R-Biomass-Ecoli-core-N--w-GAM-  -55.703
 ****      $170
- 307  R-PTAr . R-EX-h2o-e-    -1.
+ 308  R-PTAr . R-EX-h2o-e-    -1.
 ****       $170
- 308  R-PTAr . R-H2Ot -1.
+ 309  R-PTAr . R-H2Ot -1.
 ****       $170
- 309  R-ATPS4r . R-ACt2r      1.
+ 310  R-ATPS4r . R-ACt2r      1.
 ****         $170
- 310  R-ATPS4r . R-AKGt2r     1.
+ 311  R-ATPS4r . R-AKGt2r     1.
 ****         $170
- 311  R-ATPS4r . R-ETOHt2r    1.
+ 312  R-ATPS4r . R-ETOHt2r    1.
 ****         $170
- 312  R-ATPS4r . R-D-LACt2    1.
+ 313  R-ATPS4r . R-D-LACt2    1.
 ****         $170
- 313  R-ATPS4r . R-LDH-D      1.
+ 314  R-ATPS4r . R-LDH-D      1.
 ****         $170
- 314  R-ATPS4r . R-MDH        1.
+ 315  R-ATPS4r . R-MDH        1.
 ****         $170
- 315  R-ATPS4r . R-ADHEr      -2.
+ 316  R-ATPS4r . R-ADHEr      -2.
 ****         $170
- 316  R-ATPS4r . R-G6PDH2r    1.
+ 317  R-ATPS4r . R-G6PDH2r    1.
 ****         $170
- 317  R-ATPS4r . R-ATPS4r     3.
+ 318  R-ATPS4r . R-ATPS4r     3.
 ****         $170
- 318  R-ATPS4r . R-GAPD       1.
+ 319  R-ATPS4r . R-GAPD       1.
 ****         $170
- 319  R-ATPS4r . R-PYRt2r     1.
+ 320  R-ATPS4r . R-PYRt2r     1.
 ****         $170
- 320  R-ATPS4r . R-PFK        1.
+ 321  R-ATPS4r . R-PFK        1.
 ****         $170
- 321  R-ATPS4r . R-PGL        1.
+ 322  R-ATPS4r . R-PGL        1.
 ****         $170
- 322  R-ATPS4r . R-ATPM       1.
+ 323  R-ATPS4r . R-ATPM       1.
 ****         $170
- 323  R-ATPS4r . R-MALS       1.
+ 324  R-ATPS4r . R-MALS       1.
 ****         $170
- 324  R-ATPS4r . R-FUMt2-2    2.
+ 325  R-ATPS4r . R-FUMt2-2    2.
 ****         $170
- 325  R-ATPS4r . R-THD2       2.
+ 326  R-ATPS4r . R-THD2       2.
 ****         $170
- 326  R-ATPS4r . R-CS 1.
+ 327  R-ATPS4r . R-CS 1.
 ****         $170
- 327  R-ATPS4r . R-PPC        1.
+ 328  R-ATPS4r . R-PPC        1.
 ****         $170
- 328  R-ATPS4r . R-PYK        -1.
+ 329  R-ATPS4r . R-PYK        -1.
 ****         $170
- 329  R-ATPS4r . R-PPS        2.
+ 330  R-ATPS4r . R-PPS        2.
 ****         $170
- 330  R-ATPS4r . R-NADH11     -3.
+ 331  R-ATPS4r . R-NADH11     -3.
 ****         $170
- 331  R-ATPS4r . R-CYTBD      -2.
+ 332  R-ATPS4r . R-CYTBD      -2.
 ****         $170
- 332  R-ATPS4r . R-Biomass-Ecoli-core-N--w-GAM-       41.025
+ 333  R-ATPS4r . R-Biomass-Ecoli-core-N--w-GAM-       41.025
 ****         $170
- 333  R-ATPS4r . R-SUCCt2b    -1.
+ 334  R-ATPS4r . R-SUCCt2b    -1.
 ****         $170
- 334  R-ATPS4r . R-SUCCt2-2   2.
+ 335  R-ATPS4r . R-SUCCt2-2   2.
 ****         $170
- 335  R-GAPD . R-EX-h-e-      -1.
+ 336  R-GAPD . R-EX-h-e-      -1.
 ****       $170
- 336  R-GAPD . R-ACt2r        -1.
+ 337  R-GAPD . R-ACt2r        -1.
 ****       $170
- 337  R-GAPD . R-AKGt2r       -1.
+ 338  R-GAPD . R-AKGt2r       -1.
 ****       $170
- 338  R-GAPD . R-ETOHt2r      -1.
+ 339  R-GAPD . R-ETOHt2r      -1.
 ****       $170
-GAMS Rev 230  DII-DII 23.0.2 Mac Intel32/Darwin                                                    03/02/09 13:27:38 Page 8
+GAMS Rev 230  DII-DII 23.0.2 Mac Intel32/Darwin                                                    03/11/09 21:56:37 Page 8
 FBA implementation (Proof of Principle)
 C o m p i l a t i o n
 
 
- 339  R-GAPD . R-D-LACt2      -1.
+ 340  R-GAPD . R-D-LACt2      -1.
 ****       $170
- 340  R-GAPD . R-ATPS4r       -4.
+ 341  R-GAPD . R-ATPS4r       -4.
 ****       $170
- 341  R-GAPD . R-PYRt2r       -1.
+ 342  R-GAPD . R-PYRt2r       -1.
 ****       $170
- 342  R-GAPD . R-FUMt2-2      -2.
+ 343  R-GAPD . R-FUMt2-2      -2.
 ****       $170
- 343  R-GAPD . R-THD2 -2.
+ 344  R-GAPD . R-THD2 -2.
 ****       $170
- 344  R-GAPD . R-NADH11       2.
+ 345  R-GAPD . R-NADH11       2.
 ****       $170
- 345  R-GAPD . R-CYTBD        2.
+ 346  R-GAPD . R-CYTBD        2.
 ****       $170
- 346  R-GAPD . R-SUCCt2b      1.
+ 347  R-GAPD . R-SUCCt2b      1.
 ****       $170
- 347  R-GAPD . R-SUCCt2-2     -2.
+ 348  R-GAPD . R-SUCCt2-2     -2.
 ****       $170
- 348  R-EX-pi-e- . R-ACONT    1.
+ 349  R-EX-pi-e- . R-ACONT    1.
 ****           $170
- 349  R-EX-pi-e- . R-ICDHyr   -1.
+ 350  R-EX-pi-e- . R-ICDHyr   -1.
 ****           $170
- 350  R-EX-pi-e- . R-ICL      -1.
+ 351  R-EX-pi-e- . R-ICL      -1.
 ****           $170
- 351  R-EX-pyr-e- . R-D-LACt2 1.
+ 352  R-EX-pyr-e- . R-D-LACt2 1.
 ****            $170
- 352  R-EX-pyr-e- . R-LDH-D   -1.
+ 353  R-EX-pyr-e- . R-LDH-D   -1.
 ****            $170
- 353  R-PYRt2r . R-EX-lac-D-e-        -1.
+ 354  R-PYRt2r . R-EX-lac-D-e-        -1.
 ****         $170
- 354  R-PYRt2r . R-D-LACt2    -1.
+ 355  R-PYRt2r . R-D-LACt2    -1.
 ****         $170
- 355  R-SUCD4 . R-FUM 1.
+ 356  R-SUCD4 . R-FUM 1.
 ****        $170
- 356  R-SUCD4 . R-MDH -1.
+ 357  R-SUCD4 . R-MDH -1.
 ****        $170
- 357  R-SUCD4 . R-MALS        1.
+ 358  R-SUCD4 . R-MALS        1.
 ****        $170
- 358  R-SUCD4 . R-ME1 -1.
+ 359  R-SUCD4 . R-ME1 -1.
 ****        $170
- 359  R-SUCD4 . R-ME2 -1.
+ 360  R-SUCD4 . R-ME2 -1.
 ****        $170
- 360  R-RPI . R-LDH-D -1.
+ 361  R-RPI . R-LDH-D -1.
 ****      $170
- 361  R-RPI . R-MDH   -1.
+ 362  R-RPI . R-MDH   -1.
 ****      $170
- 362  R-RPI . R-ADHEr 2.
+ 363  R-RPI . R-ADHEr 2.
 ****      $170
- 363  R-RPI . R-GAPD  -1.
+ 364  R-RPI . R-GAPD  -1.
 ****      $170
- 364  R-RPI . R-AKGDH -1.
+ 365  R-RPI . R-AKGDH -1.
 ****      $170
- 365  R-RPI . R-ME1   -1.
+ 366  R-RPI . R-ME1   -1.
 ****      $170
- 366  R-RPI . R-THD2  1.
+ 367  R-RPI . R-THD2  1.
 ****      $170
- 367  R-RPI . R-NADTRHD       -1.
+ 368  R-RPI . R-NADTRHD       -1.
 ****      $170
- 368  R-RPI . R-PDH   -1.
+ 369  R-RPI . R-PDH   -1.
 ****      $170
- 369  R-RPI . R-NADH11        1.
+ 370  R-RPI . R-NADH11        1.
 ****      $170
- 370  R-RPI . R-Biomass-Ecoli-core-N--w-GAM-  -3.547
+ 371  R-RPI . R-Biomass-Ecoli-core-N--w-GAM-  -3.547
 ****      $170
- 371  R-RPE . R-LDH-D 1.
+ 372  R-RPE . R-LDH-D 1.
 ****      $170
- 372  R-RPE . R-MDH   1.
+ 373  R-RPE . R-MDH   1.
 ****      $170
- 373  R-RPE . R-ADHEr -2.
+ 374  R-RPE . R-ADHEr -2.
 ****      $170
- 374  R-RPE . R-GAPD  1.
+ 375  R-RPE . R-GAPD  1.
 ****      $170
-GAMS Rev 230  DII-DII 23.0.2 Mac Intel32/Darwin                                                    03/02/09 13:27:38 Page 9
+GAMS Rev 230  DII-DII 23.0.2 Mac Intel32/Darwin                                                    03/11/09 21:56:37 Page 9
 FBA implementation (Proof of Principle)
 C o m p i l a t i o n
 
 
- 375  R-RPE . R-AKGDH 1.
+ 376  R-RPE . R-AKGDH 1.
 ****      $170
- 376  R-RPE . R-ME1   1.
+ 377  R-RPE . R-ME1   1.
 ****      $170
- 377  R-RPE . R-THD2  -1.
+ 378  R-RPE . R-THD2  -1.
 ****      $170
- 378  R-RPE . R-NADTRHD       1.
+ 379  R-RPE . R-NADTRHD       1.
 ****      $170
- 379  R-RPE . R-PDH   1.
+ 380  R-RPE . R-PDH   1.
 ****      $170
- 380  R-RPE . R-NADH11        -1.
+ 381  R-RPE . R-NADH11        -1.
 ****      $170
- 381  R-RPE . R-Biomass-Ecoli-core-N--w-GAM-  3.547
+ 382  R-RPE . R-Biomass-Ecoli-core-N--w-GAM-  3.547
 ****      $170
- 382  R-TALA . R-G6PDH2r      -1.
+ 383  R-TALA . R-G6PDH2r      -1.
 ****       $170
- 383  R-TALA . R-ICDHyr       -1.
+ 384  R-TALA . R-ICDHyr       -1.
 ****       $170
- 384  R-TALA . R-GND  -1.
+ 385  R-TALA . R-GND  -1.
 ****       $170
- 385  R-TALA . R-ME2  -1.
+ 386  R-TALA . R-ME2  -1.
 ****       $170
- 386  R-TALA . R-THD2 -1.
+ 387  R-TALA . R-THD2 -1.
 ****       $170
- 387  R-TALA . R-NADTRHD      1.
+ 388  R-TALA . R-NADTRHD      1.
 ****       $170
- 388  R-TALA . R-Biomass-Ecoli-core-N--w-GAM- 18.225
+ 389  R-TALA . R-Biomass-Ecoli-core-N--w-GAM- 18.225
 ****       $170
- 389  R-SUCOAS . R-G6PDH2r    1.
+ 390  R-SUCOAS . R-G6PDH2r    1.
 ****         $170
- 390  R-SUCOAS . R-ICDHyr     1.
+ 391  R-SUCOAS . R-ICDHyr     1.
 ****         $170
- 391  R-SUCOAS . R-GND        1.
+ 392  R-SUCOAS . R-GND        1.
 ****         $170
- 392  R-SUCOAS . R-ME2        1.
+ 393  R-SUCOAS . R-ME2        1.
 ****         $170
- 393  R-SUCOAS . R-THD2       1.
+ 394  R-SUCOAS . R-THD2       1.
 ****         $170
- 394  R-SUCOAS . R-NADTRHD    -1.
+ 395  R-SUCOAS . R-NADTRHD    -1.
 ****         $170
- 395  R-SUCOAS . R-Biomass-Ecoli-core-N--w-GAM-       -18.225
+ 396  R-SUCOAS . R-Biomass-Ecoli-core-N--w-GAM-       -18.225
 ****         $170
- 396  R-EX-succ-e- . R-O2t    1.
+ 397  R-EX-succ-e- . R-O2t    1.
 ****             $170
- 397  R-EX-succ-e- . R-CYTBD  -0.5
+ 398  R-EX-succ-e- . R-CYTBD  -0.5
 ****             $170
- 398  R-TKT2 . R-EX-o2-e-     -1.
+ 399  R-TKT2 . R-EX-o2-e-     -1.
 ****       $170
- 399  R-TKT2 . R-O2t  -1.
+ 400  R-TKT2 . R-O2t  -1.
 ****       $170
- 400  R-TKT1 . R-MDH  1.
+ 401  R-TKT1 . R-MDH  1.
 ****       $170
- 401  R-TKT1 . R-PPCK -1.
+ 402  R-TKT1 . R-PPCK -1.
 ****       $170
- 402  R-TKT1 . R-CS   -1.
+ 403  R-TKT1 . R-CS   -1.
 ****       $170
- 403  R-TKT1 . R-PPC  1.
+ 404  R-TKT1 . R-PPC  1.
 ****       $170
- 404  R-TKT1 . R-Biomass-Ecoli-core-N--w-GAM- -1.7867
+ 405  R-TKT1 . R-Biomass-Ecoli-core-N--w-GAM- -1.7867
 ****       $170
- 405  R-PFK . R-ENO   1.
+ 406  R-PFK . R-ENO   1.
 ****      $170
- 406  R-PFK . R-PPCK  1.
+ 407  R-PFK . R-PPCK  1.
 ****      $170
- 407  R-PFK . R-GLCpts        -1.
+ 408  R-PFK . R-GLCpts        -1.
 ****      $170
- 408  R-PFK . R-PPC   -1.
+ 409  R-PFK . R-PPC   -1.
 ****      $170
- 409  R-PFK . R-PYK   -1.
+ 410  R-PFK . R-PYK   -1.
 ****      $170
- 410  R-PFK . R-PPS   1.
+ 411  R-PFK . R-PPS   1.
 ****      $170
-GAMS Rev 230  DII-DII 23.0.2 Mac Intel32/Darwin                                                   03/02/09 13:27:38 Page 10
+GAMS Rev 230  DII-DII 23.0.2 Mac Intel32/Darwin                                                   03/11/09 21:56:37 Page 10
 FBA implementation (Proof of Principle)
 C o m p i l a t i o n
 
 
- 411  R-PFK . R-Biomass-Ecoli-core-N--w-GAM-  -0.5191
+ 412  R-PFK . R-Biomass-Ecoli-core-N--w-GAM-  -0.5191
 ****      $170
- 412  R-FRD . R-PIt   -1.
+ 413  R-FRD . R-PIt   -1.
 ****      $170
- 413  R-FRD . R-PTAr  -1.
+ 414  R-FRD . R-PTAr  -1.
 ****      $170
- 414  R-FRD . R-ATPS4r        -1.
+ 415  R-FRD . R-ATPS4r        -1.
 ****      $170
- 415  R-FRD . R-GAPD  -1.
+ 416  R-FRD . R-GAPD  -1.
 ****      $170
- 416  R-FRD . R-SUCOAS        1.
+ 417  R-FRD . R-SUCOAS        1.
 ****      $170
- 417  R-FRD . R-ATPM  1.
+ 418  R-FRD . R-ATPM  1.
 ****      $170
- 418  R-FRD . R-FBP   1.
+ 419  R-FRD . R-FBP   1.
 ****      $170
- 419  R-FRD . R-PPC   1.
+ 420  R-FRD . R-PPC   1.
 ****      $170
- 420  R-FRD . R-PPS   1.
+ 421  R-FRD . R-PPS   1.
 ****      $170
- 421  R-FRD . R-Biomass-Ecoli-core-N--w-GAM-  55.703
+ 422  R-FRD . R-Biomass-Ecoli-core-N--w-GAM-  55.703
 ****      $170
- 422  R-PGL . R-PIt   1.
+ 423  R-PGL . R-PIt   1.
 ****      $170
- 423  R-PGL . R-EX-pi-e-      -1.
+ 424  R-PGL . R-EX-pi-e-      -1.
 ****      $170
- 424  R-ATPM . R-LDH-D        1.
+ 425  R-ATPM . R-LDH-D        1.
 ****       $170
- 425  R-ATPM . R-PYRt2r       1.
+ 426  R-ATPM . R-PYRt2r       1.
 ****       $170
- 426  R-ATPM . R-ME1  1.
+ 427  R-ATPM . R-ME1  1.
 ****       $170
- 427  R-ATPM . R-ME2  1.
+ 428  R-ATPM . R-ME2  1.
 ****       $170
- 428  R-ATPM . R-GLCpts       1.
+ 429  R-ATPM . R-GLCpts       1.
 ****       $170
- 429  R-ATPM . R-PYK  1.
+ 430  R-ATPM . R-PYK  1.
 ****       $170
- 430  R-ATPM . R-PFL  -1.
+ 431  R-ATPM . R-PFL  -1.
 ****       $170
- 431  R-ATPM . R-PPS  -1.
+ 432  R-ATPM . R-PPS  -1.
 ****       $170
- 432  R-ATPM . R-PDH  -1.
+ 433  R-ATPM . R-PDH  -1.
 ****       $170
- 433  R-ATPM . R-Biomass-Ecoli-core-N--w-GAM- -2.8328
+ 434  R-ATPM . R-Biomass-Ecoli-core-N--w-GAM- -2.8328
 ****       $170
- 434  R-FBP . R-EX-pyr-e-     -1.
+ 435  R-FBP . R-EX-pyr-e-     -1.
 ****      $170
- 435  R-FBP . R-PYRt2r        -1.
+ 436  R-FBP . R-PYRt2r        -1.
 ****      $170
- 436  R-MALS . R-SUCD4        -1.
+ 437  R-MALS . R-SUCD4        -1.
 ****       $170
- 437  R-MALS . R-NADH11       -1.
+ 438  R-MALS . R-NADH11       -1.
 ****       $170
- 438  R-MALS . R-CYTBD        1.
+ 439  R-MALS . R-CYTBD        1.
 ****       $170
- 439  R-FUMt2-2 . R-SUCD4     1.
+ 440  R-FUMt2-2 . R-SUCD4     1.
 ****          $170
- 440  R-FUMt2-2 . R-NADH11    1.
+ 441  R-FUMt2-2 . R-NADH11    1.
 ****          $170
- 441  R-FUMt2-2 . R-CYTBD     -1.
+ 442  R-FUMt2-2 . R-CYTBD     -1.
 ****          $170
- 442  R-ICL . R-RPI   -1.
+ 443  R-ICL . R-RPI   -1.
 ****      $170
- 443  R-ICL . R-TKT1  -1.
+ 444  R-ICL . R-TKT1  -1.
 ****      $170
- 444  R-ICL . R-Biomass-Ecoli-core-N--w-GAM-  -0.8977
+ 445  R-ICL . R-Biomass-Ecoli-core-N--w-GAM-  -0.8977
 ****      $170
- 445  R-AKGDH . R-RPI 1.
+ 446  R-AKGDH . R-RPI 1.
 ****        $170
- 446  R-AKGDH . R-RPE -1.
+ 447  R-AKGDH . R-RPE -1.
 ****        $170
-GAMS Rev 230  DII-DII 23.0.2 Mac Intel32/Darwin                                                   03/02/09 13:27:38 Page 11
+GAMS Rev 230  DII-DII 23.0.2 Mac Intel32/Darwin                                                   03/11/09 21:56:37 Page 11
 FBA implementation (Proof of Principle)
 C o m p i l a t i o n
 
 
- 447  R-AKGDH . R-GND 1.
+ 448  R-AKGDH . R-GND 1.
 ****        $170
- 448  R-ME1 . R-TALA  -1.
+ 449  R-ME1 . R-TALA  -1.
 ****      $170
- 449  R-ME1 . R-TKT1  1.
+ 450  R-ME1 . R-TKT1  1.
 ****      $170
- 450  R-GND . R-SUCOAS        -1.
+ 451  R-GND . R-SUCOAS        -1.
 ****      $170
- 451  R-GND . R-FRD   1.
+ 452  R-GND . R-FRD   1.
 ****      $170
- 452  R-GND . R-ICL   1.
+ 453  R-GND . R-ICL   1.
 ****      $170
- 453  R-GND . R-SUCD1i        -1.
+ 454  R-GND . R-SUCD1i        -1.
 ****      $170
- 454  R-GND . R-SUCCt2b       -1.
+ 455  R-GND . R-SUCCt2b       -1.
 ****      $170
- 455  R-GND . R-SUCCt2-2      1.
+ 456  R-GND . R-SUCCt2-2      1.
 ****      $170
- 456  R-ME2 . R-EX-succ-e-    -1.
+ 457  R-ME2 . R-EX-succ-e-    -1.
 ****      $170
- 457  R-ME2 . R-SUCCt2b       1.
+ 458  R-ME2 . R-SUCCt2b       1.
 ****      $170
- 458  R-ME2 . R-SUCCt2-2      -1.
+ 459  R-ME2 . R-SUCCt2-2      -1.
 ****      $170
- 459  R-THD2 . R-SUCOAS       1.
+ 460  R-THD2 . R-SUCOAS       1.
 ****       $170
- 460  R-THD2 . R-AKGDH        1.
+ 461  R-THD2 . R-AKGDH        1.
 ****       $170
- 461  R-NADTRHD . R-RPE       1.
+ 462  R-NADTRHD . R-RPE       1.
 ****          $170
- 462  R-NADTRHD . R-TKT2      -1.
+ 463  R-NADTRHD . R-TKT2      -1.
 ****          $170
- 463  R-NADTRHD . R-TKT1      -1.
+ 464  R-NADTRHD . R-TKT1      -1.
 ****          $170
- 464   
- 465      /
+ 465  /
  466  ;
  467   
  468  Variables
@@ -834,7 +834,7 @@ C o m p i l a t i o n
  483   
  484  Solve fba using lp maximizing Z;
 ****                                 $257
-GAMS Rev 230  DII-DII 23.0.2 Mac Intel32/Darwin                                                   03/02/09 13:27:38 Page 12
+GAMS Rev 230  DII-DII 23.0.2 Mac Intel32/Darwin                                                   03/11/09 21:56:37 Page 12
 FBA implementation (Proof of Principle)
 Error Messages
 
@@ -846,10 +846,10 @@ Error Messages
 195  Symbol redefined with a different type
 257  Solve statement not checked because of previous errors
 
-**** 301 ERROR(S)   0 WARNING(S)
+**** 300 ERROR(S)   0 WARNING(S)
 
 
-COMPILATION TIME     =        0.007 SECONDS      3 Mb  DII230-230 Feb 12, 2009
+COMPILATION TIME     =        0.004 SECONDS      3 Mb  DII230-230 Feb 12, 2009
 
 
 USER: GAMS Development Corporation, Washington, DC   G871201/0000CA-ANY
@@ -858,7 +858,7 @@ USER: GAMS Development Corporation, Washington, DC   G871201/0000CA-ANY
 
 **** FILE SUMMARY
 
-Input      /Users/niko/GitRepo/neosproject/expandedFBAmodel.gms
-Output     /Users/niko/GitRepo/neosproject/expandedFBAmodel.lst
+Input      /Users/niko/arbeit/GitRepo/neosproject/expandedFBAmodel.gms
+Output     /Users/niko/arbeit/GitRepo/neosproject/expandedFBAmodel.lst
 
 **** USER ERROR(S) ENCOUNTERED

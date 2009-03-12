@@ -5,7 +5,7 @@ $TITLE FBA implementation (Proof of Principle)
 *
 
 Sets
-    i row index /
+    i /
     M13dpgc
 M2pgc
 M3pgc
@@ -83,8 +83,9 @@ Msuccc
 Msucce
 Msuccoac
 Mxu5pDc
-    /
-    j column index /
+/
+
+    j /
     R-PGM
 R-ENO
 R-EX-ac-e-
@@ -93,7 +94,7 @@ R-PGK
 R-ACKr
 R-ADK1
 R-ACONT
-R-EX-co2-e
+R-EX-co2-e-
 R-CO2t
 R-TPI
 R-EX-etoh-e-
@@ -167,7 +168,7 @@ R-SUCCt2-2
 
 Parameters
     S(i,j) stoichiometric matrix /
-    R-PGM . R-PGK	1.
+    R-PGM . R-PGK = 1.
 R-PGM . R-GAPD	1.
 R-ENO . R-PGM	-1.
 R-ENO . R-ENO	-1.
@@ -461,8 +462,7 @@ R-THD2 . R-AKGDH	1.
 R-NADTRHD . R-RPE	1.
 R-NADTRHD . R-TKT2	-1.
 R-NADTRHD . R-TKT1	-1.
-
-    /
+/
 ;
 
 Variables
