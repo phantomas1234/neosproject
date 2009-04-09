@@ -168,7 +168,7 @@ if __name__ == "__main__":
     # testNeos()
     tmp = testGAMSmodel(path1, path3)
     print tmp
-    open('expandedFBAmodel.gms', 'w').write(tmp.modModel.replace("_", "-"))
+    open('expandedFBAmodel.gms', 'w').write(tmp.modModel)
     # neos = Neos(tmp.modModel, modelName="stub", category="lp", solver="BDMLP", 
     # inputMethod="GAMS", comments="None")
     # results = neos.solve(999)

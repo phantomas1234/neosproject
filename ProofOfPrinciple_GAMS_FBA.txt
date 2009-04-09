@@ -23,14 +23,14 @@ Variables
     Z objective function value
     v(j) flux vector
 ;
+%(bounds)s
 
-positive variable v;
 
 Equations
     obj objective function
-    st_constr stoichiometric constraints
+    st_constr stoichiometric constraints;
     
-obj.. Z =e= v(%(objectiveIndex)s)
+obj.. Z =e= v('%(objectiveIndex)s');
 st_constr(i).. sum(j, S(i,j)*v(j)) =e= 0;
 
 Model fba /all/;
